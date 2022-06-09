@@ -23,7 +23,6 @@ func StartServer(conf config.Config) {
 	}
 
 	http.HandleFunc("/", handleHome())
-	http.HandleFunc("/allgames", handleAllGames())
 
 	if err := http.ListenAndServe(fmt.Sprintf(":%d", conf.Port), nil); err != nil {
 		log.Fatal(err)
