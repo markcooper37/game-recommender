@@ -24,7 +24,7 @@ func StartServer(conf config.Config) {
 
 	http.HandleFunc("/", handleHome())
 
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", conf.Port), nil); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", conf.Port), nil); err != nil {
 		log.Fatal(err)
 	}
 }
