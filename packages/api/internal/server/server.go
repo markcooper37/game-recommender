@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func StartServer(conf *config.Config) {
+func StartServer(conf config.Config) {
 	db, err := NewDatabase(conf)
 	if err != nil {
 		log.Fatal("Could not start database")
@@ -30,7 +30,7 @@ func StartServer(conf *config.Config) {
 	}
 }
 
-func NewDatabase(conf *config.Config) (*gorm.DB, error) {
+func NewDatabase(conf config.Config) (*gorm.DB, error) {
 	return gorm.Open(postgres.New(postgres.Config{
 		DSN: conf.DSN,
 	}), &gorm.Config{})

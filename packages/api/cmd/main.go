@@ -12,7 +12,7 @@ func main() {
 	server.StartServer(conf)
 }
 
-func mustLoadConfig() *config.Config {
+func mustLoadConfig() config.Config {
 	conf, err := config.Load()
 	if err != nil {
 		log.Fatalf("error loading app config %v", err)
