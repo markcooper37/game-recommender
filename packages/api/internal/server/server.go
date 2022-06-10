@@ -22,9 +22,14 @@ func StartServer(conf config.Config) {
 		log.Fatal("Could not migrate models")
 	}
 
-	http.HandleFunc("/", handleHome())
+	handlers := mustInitRoutes(db, conf)
 
-	if err := http.ListenAndServe(fmt.Sprintf(":%s", conf.Port), nil); err != nil {
+	server := &http.Server{
+		Addr:    fmt.Sprintf("%s:%s", conf.Host, conf.Port),
+		Handler: handlers,
+	}
+
+	if err := server.ListenAndServe(); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -33,4 +38,18 @@ func NewDatabase(conf config.Config) (*gorm.DB, error) {
 	return gorm.Open(postgres.New(postgres.Config{
 		DSN: conf.DSN,
 	}), &gorm.Config{})
+}
+
+func mustInitRoutes(db *gorm.DB, conf config.Config) http.Handler {
+	schema, err := MakeGraphQLSchema(db)
+	if err != nil {
+		log.Fatalf("error creating routes %v", err)
+	}
+
+	handlers, err := Routes(schema, conf)
+	if err != nil {
+		log.Fatalf("error creating routes %v", err)
+	}
+
+	return handlers
 }

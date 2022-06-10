@@ -3,12 +3,18 @@ module github.com/markcooper37/game-recommender/packages/api
 go 1.18
 
 require (
+	github.com/eko/graphql-go-upload v1.0.6
+	github.com/go-chi/chi v1.5.4
+	github.com/graph-gophers/graphql-go v1.4.0
 	github.com/kelseyhightower/envconfig v1.4.0
+	go.opencensus.io v0.23.0
 	gorm.io/driver/postgres v1.3.7
 	gorm.io/gorm v1.23.5
 )
 
 require (
+	github.com/gabriel-vasile/mimetype v1.0.3-0.20200212131322-601d7eca51e5 // indirect
+	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.12.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect

@@ -1,0 +1,5 @@
+type Query {
+    gameRecommenderString: String!
+}
+
+# type Mutation {}
