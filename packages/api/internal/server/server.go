@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/markcooper37/game-recommender/packages/api/internal/config"
-	"github.com/markcooper37/game-recommender/packages/api/internal/resolvers"
+	"github.com/markcooper37/game-recommender/packages/api/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -17,8 +17,9 @@ func StartServer(conf config.Config) {
 		log.Fatal("Could not start database")
 	}
 
-	resolver := resolvers.Resolver{DB: db}
-	if err = resolver.Migrate(); err != nil {
+	if err = db.AutoMigrate(
+		&models.Game{},
+	); err != nil {
 		log.Fatal("Could not migrate models")
 	}
 
