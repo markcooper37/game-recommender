@@ -2,6 +2,7 @@ package server
 
 import (
 	"embed"
+	"fmt"
 	"net/http"
 
 	upload "github.com/eko/graphql-go-upload"
@@ -15,10 +16,20 @@ import (
 	"gorm.io/gorm"
 )
 
+//go:embed templates/playground.html
+var playgroundHTML []byte
+
+func playground(w http.ResponseWriter, _ *http.Request) {
+	if _, err := w.Write(playgroundHTML); err != nil {
+		http.Error(w, fmt.Sprintf("playground handler error %v", err), http.StatusInternalServerError)
+		return
+	}
+}
+
 //go:embed graphql/*.graphql
 var folder embed.FS
 
-func Routes(schema *graphql.Schema, conf config.Config) (http.Handler, error) {
+func Routes(schema *graphql.Schema, conf config.Config) http.Handler {
 	r := chi.NewRouter()
 
 	r.Use(
@@ -26,9 +37,11 @@ func Routes(schema *graphql.Schema, conf config.Config) (http.Handler, error) {
 		middleware.Heartbeat("/ping"),
 	)
 
+	r.Get("/api/graphql", playground)
+
 	r.Method(http.MethodPost, "/api/graphql", upload.Handler(&relay.Handler{Schema: schema}))
 
-	return &ochttp.Handler{Handler: r}, nil
+	return &ochttp.Handler{Handler: r}
 }
 
 func MakeGraphQLSchema(db *gorm.DB) (*graphql.Schema, error) {

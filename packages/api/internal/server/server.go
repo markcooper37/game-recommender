@@ -47,10 +47,5 @@ func mustInitRoutes(db *gorm.DB, conf config.Config) http.Handler {
 		log.Fatalf("error creating routes %v", err)
 	}
 
-	handlers, err := Routes(schema, conf)
-	if err != nil {
-		log.Fatalf("error creating routes %v", err)
-	}
-
-	return handlers
+	return Routes(schema, conf)
 }
