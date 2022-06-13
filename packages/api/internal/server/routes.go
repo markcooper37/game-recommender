@@ -50,7 +50,7 @@ func MakeGraphQLSchema(db *gorm.DB) (*graphql.Schema, error) {
 		return nil, err
 	}
 	opts := []graphql.SchemaOpt{graphql.UseFieldResolvers()}
-	rootResolver := resolvers.NewRootResolver()
+	rootResolver := resolvers.NewRootResolver(db)
 
 	return graphql.ParseSchema(schemaDefinition, rootResolver, opts...)
 }

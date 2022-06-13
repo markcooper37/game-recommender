@@ -1,0 +1,8 @@
+type Game {
+  name: String!
+  minAge: Int!
+  minPlayer: Int!
+  maxPlayer: Int!
+  category: String!
+  description: String!
+}

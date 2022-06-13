@@ -1,5 +1,5 @@
 type Query {
-    gameRecommenderString: String!
+  games: [Game!]!
 }
 
 # type Mutation {}
