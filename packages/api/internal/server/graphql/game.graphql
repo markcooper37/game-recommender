@@ -4,5 +4,6 @@ type Game {
   minPlayer: Int!
   maxPlayer: Int!
   category: String!
+  genre: String!
   description: String!
 }
