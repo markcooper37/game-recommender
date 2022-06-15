@@ -29,16 +29,22 @@ func (g *Game) Category() string {
 	return g.game.Category
 }
 
+func (g *Game) Genre() string {
+	return g.game.Genre
+}
+
 func (g *Game) Description() string {
 	return g.game.Description
 }
 
 type GameResolver struct {
 	GameQuery
+	GameMutation
 }
 
 func NewGameResolver(db *gorm.DB) *GameResolver {
 	return &GameResolver{
 		NewGameQuery(db),
+		NewGameMutation(db),
 	}
 }
