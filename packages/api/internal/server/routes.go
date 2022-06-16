@@ -25,7 +25,7 @@ var playgroundHTML []byte
 
 func playground(w http.ResponseWriter, _ *http.Request) {
 	if _, err := w.Write(playgroundHTML); err != nil {
-		http.Error(w, fmt.Sprintf("playground handler error %v", err), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("playground handler error: %v", err), http.StatusInternalServerError)
 		return
 	}
 }
