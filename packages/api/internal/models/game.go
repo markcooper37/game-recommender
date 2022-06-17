@@ -1,7 +1,7 @@
 package models
 
 type Game struct {
-	Name        string
+	Name        string `gorm:"primaryKey"`
 	MinAge      int32
 	MinPlayer   int32
 	MaxPlayer   int32
