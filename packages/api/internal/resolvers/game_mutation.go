@@ -18,7 +18,11 @@ type createGameArgs struct {
 }
 
 func (g *GameMutation) CreateGame(args createGameArgs) (string, error) {
-	return "ok", g.db.Create(args.Input).Error
+	err := g.db.Create(args.Input).Error
+	if err != nil {
+		return "", err
+	}
+	return "successfully added " + args.Input.Name, nil
 }
 
 type deleteGameArgs struct {
