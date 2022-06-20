@@ -64,7 +64,7 @@ func ConcatGraphQLSchemaFiles(fsys fs.FS) (string, error) {
 
 	err := fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			return fmt.Errorf("walking dir: %w", err)
+			return fmt.Errorf("walking directory: %w", err)
 		}
 
 		fileSuffix := fmt.Sprintf(".%s", "graphql")
