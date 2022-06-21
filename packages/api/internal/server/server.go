@@ -14,13 +14,13 @@ import (
 func StartServer(conf config.Config) {
 	db, err := NewDatabase(conf)
 	if err != nil {
-		log.Fatal("Could not start database")
+		log.Fatal("could not start database")
 	}
 
 	if err = db.AutoMigrate(
 		&models.Game{},
 	); err != nil {
-		log.Fatal("Could not migrate models")
+		log.Fatal("could not migrate models")
 	}
 
 	handlers := mustInitRoutes(db, conf)
@@ -44,7 +44,7 @@ func NewDatabase(conf config.Config) (*gorm.DB, error) {
 func mustInitRoutes(db *gorm.DB, conf config.Config) http.Handler {
 	schema, err := MakeGraphQLSchema(db)
 	if err != nil {
-		log.Fatalf("error creating routes %v", err)
+		log.Fatalf("error creating routes: %v", err)
 	}
 
 	return Routes(schema, conf)
