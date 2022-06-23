@@ -4,5 +4,6 @@ type Query {
 
 type Mutation {
   createGame(input: CreateGameInput!): String!
+  updateGame(input: UpdateGameInput!): Game!
   deleteGame(name: String!): String!
 }

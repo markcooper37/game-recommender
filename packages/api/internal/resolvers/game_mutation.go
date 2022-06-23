@@ -25,6 +25,39 @@ func (g *GameMutation) CreateGame(args createGameArgs) (string, error) {
 	return "successfully added " + args.Input.Name, nil
 }
 
+type updateGameArgs struct {
+	Input UpdateGameInput
+}
+
+type UpdateGameInput struct {
+	Name        string
+	MinAge      int32
+	MinPlayer   int32
+	MaxPlayer   int32
+	Category    string
+	Genre       string
+	Description string
+}
+
+func (g *GameMutation) UpdateGame(args updateGameArgs) (*Game, error) {
+	updates := models.Game{
+		Name: args.Input.Name,
+		MinAge: args.Input.MinAge,
+		MinPlayer: args.Input.MinPlayer,
+		MaxPlayer: args.Input.MaxPlayer,
+		Category: args.Input.Category,
+		Genre: args.Input.Genre,
+		Description: args.Input.Description,
+	}
+
+	err := g.db.Model(&models.Game{}).Where("name = ?", args.Input.Name).Updates(updates).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &Game{game: &updates}, nil
+}
+
 type deleteGameArgs struct {
 	Name string
 }

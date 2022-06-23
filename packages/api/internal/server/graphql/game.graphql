@@ -17,3 +17,13 @@ input CreateGameInput {
   genre: String!
   description: String!
 }
+
+input UpdateGameInput {
+  name: String!
+  minAge: Int!
+  minPlayer: Int!
+  maxPlayer: Int!
+  category: String!
+  genre: String!
+  description: String!
+}
