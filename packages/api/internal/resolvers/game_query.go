@@ -26,3 +26,20 @@ func (g *GameQuery) Games() ([]*Game, error) {
 	}
 	return resp, nil
 }
+
+type searchGamesArgs struct {
+	Input SearchGamesInput
+}
+
+type SearchGamesInput struct {
+	MinAge int32
+	Players int32
+	Category string
+	Genre string
+}
+
+func (g *GameQuery) SearchGames(args searchGamesArgs) ([]*Game, error) {
+	// Give each game points based on how well matched they are to the input criteria
+	// Order the games based on their points with the best matches first
+	return []*Game{}, nil
+}

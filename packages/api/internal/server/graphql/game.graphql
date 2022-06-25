@@ -27,3 +27,10 @@ input UpdateGameInput {
   genre: String!
   description: String!
 }
+
+input SearchGamesInput {
+  minAge: Int!
+  players: Int!
+  category: String!
+  genre: String!
+}

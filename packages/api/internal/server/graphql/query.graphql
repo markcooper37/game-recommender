@@ -1,5 +1,6 @@
 type Query {
   games: [Game!]!
+  searchGames(input: SearchGamesInput!): [Game!]!
 }
 
 type Mutation {
