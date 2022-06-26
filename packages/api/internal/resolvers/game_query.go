@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"sort"
+
 	"github.com/markcooper37/game-recommender/packages/api/internal/models"
 	"gorm.io/gorm"
 )
@@ -39,7 +41,29 @@ type SearchGamesInput struct {
 }
 
 func (g *GameQuery) SearchGames(args searchGamesArgs) ([]*Game, error) {
-	// Give each game points based on how well matched they are to the input criteria
-	// Order the games based on their points with the best matches first
-	return []*Game{}, nil
+	games, err := g.Games()
+	if err != nil {
+		return nil, err
+	}
+	scores := make([]int, len(games))
+	for index, game := range games {
+		if args.Input.MinAge >= game.MinAge() {
+			scores[index]++
+		}
+		if args.Input.Players >= game.MinPlayer() && args.Input.Players <= game.MaxPlayer() {
+			scores[index]++
+		}
+		if args.Input.Category == game.Category() {
+			scores[index]++
+		}
+		if args.Input.Genre == game.Genre() {
+			scores[index]++
+		}
+	}
+
+	sort.Slice(games, func(i, j int) bool {
+		return scores[i] > scores[j]
+	})
+
+	return games, nil
 }
