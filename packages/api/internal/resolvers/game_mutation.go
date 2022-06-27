@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"errors"
+
 	"github.com/markcooper37/game-recommender/packages/api/internal/models"
 	"gorm.io/gorm"
 )
@@ -18,6 +20,11 @@ type createGameArgs struct {
 }
 
 func (g *GameMutation) CreateGame(args createGameArgs) (string, error) {
+	if args.Input.MinPlayer > args.Input.MaxPlayer {
+		return "", errors.New("minimum number of players must be smaller than maximum number of players")
+	} else if args.Input.MinAge < 0 || args.Input.MinAge > 150 {
+		return "", errors.New("invalid age")
+	}
 	err := g.db.Create(args.Input).Error
 	if err != nil {
 		return "", err
