@@ -17,6 +17,7 @@ func NewGameQuery(db *gorm.DB) GameQuery {
 
 func (g *GameQuery) Games() ([]*Game, error) {
 	var games []*models.Game
+
 	err := g.db.Find(&games).Error
 	if err != nil {
 		return nil, err
@@ -26,6 +27,7 @@ func (g *GameQuery) Games() ([]*Game, error) {
 	for _, game := range games {
 		resp = append(resp, &Game{game: game})
 	}
+
 	return resp, nil
 }
 
@@ -45,6 +47,7 @@ func (g *GameQuery) SearchGames(args searchGamesArgs) ([]*Game, error) {
 	if err != nil {
 		return nil, err
 	}
+	
 	scores := make([]int, len(games))
 	for index, game := range games {
 		if args.Input.MinAge >= game.MinAge() {

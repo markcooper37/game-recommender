@@ -25,10 +25,12 @@ func (g *GameMutation) CreateGame(args createGameArgs) (string, error) {
 	} else if args.Input.MinAge < 0 || args.Input.MinAge > 150 {
 		return "", errors.New("invalid age")
 	}
+	
 	err := g.db.Create(args.Input).Error
 	if err != nil {
 		return "", err
 	}
+
 	return "successfully added " + args.Input.Name, nil
 }
 
@@ -74,5 +76,6 @@ func (g *GameMutation) DeleteGame(args deleteGameArgs) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	return "successfully deleted " + args.Name, nil
 }
