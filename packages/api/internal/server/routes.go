@@ -40,9 +40,7 @@ func Routes(schema *graphql.Schema, conf config.Config) http.Handler {
 		middleware.Recoverer,
 		middleware.Heartbeat("/ping"),
 	)
-
 	r.Get("/api/graphql", playground)
-
 	r.Method(http.MethodPost, "/api/graphql", upload.Handler(&relay.Handler{Schema: schema}))
 
 	return &ochttp.Handler{Handler: r}
@@ -53,6 +51,7 @@ func MakeGraphQLSchema(db *gorm.DB) (*graphql.Schema, error) {
 	if err != nil {
 		return nil, err
 	}
+	
 	opts := []graphql.SchemaOpt{graphql.UseFieldResolvers()}
 	rootResolver := resolvers.NewRootResolver(db)
 
