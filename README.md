@@ -17,3 +17,7 @@ To run the API, in the api folder, use:
 ```
 make api
 ```
+
+## Functionality
+
+The recommender allows you to add games to a database, update their details and also delete games. You can obtain a list of all games in the database, and search for games that best match your requirements via age rating, number of players, category and genre.
