@@ -23,12 +23,12 @@ func (g *GameQuery) Games() ([]*Game, error) {
 		return nil, err
 	}
 
-	resp := make([]*Game, 0, len(games))
+	output := make([]*Game, 0, len(games))
 	for _, game := range games {
-		resp = append(resp, &Game{game: game})
+		output = append(output, &Game{game: game})
 	}
 
-	return resp, nil
+	return output, nil
 }
 
 type searchGamesArgs struct {
@@ -43,13 +43,20 @@ type SearchGamesInput struct {
 }
 
 func (g *GameQuery) SearchGames(args searchGamesArgs) ([]*Game, error) {
-	games, err := g.Games()
+	var games []*models.Game
+
+	err := g.db.Find(&games).Error
 	if err != nil {
 		return nil, err
 	}
+
+	output := make([]*Game, 0, len(games))
+	for _, game := range games {
+		output = append(output, &Game{game: game})
+	}
 	
-	scores := make([]int, len(games))
-	for index, game := range games {
+	scores := make([]int, len(output))
+	for index, game := range output {
 		if args.Input.MinAge >= game.MinAge() {
 			scores[index]++
 		}
@@ -64,9 +71,9 @@ func (g *GameQuery) SearchGames(args searchGamesArgs) ([]*Game, error) {
 		}
 	}
 
-	sort.Slice(games, func(i, j int) bool {
+	sort.Slice(output, func(i, j int) bool {
 		return scores[i] > scores[j]
 	})
 
-	return games, nil
+	return output, nil
 }
